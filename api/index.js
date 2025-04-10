@@ -1,23 +1,28 @@
-// api/index.js
 import express from 'express';
 import cors from 'cors';
-import serverless from 'serverless-http';
 
 const app = express();
+const port = 3000;
 
 app.use(cors());
+
+// Middleware to parse JSON
 app.use(express.json());
 
 // Routes
-app.get('/', (req, res) => {
+app.post('/url', (req, res) => {
+  const bodyData = req.body;
+  console.log(bodyData)
   res.send('Hello World!');
 });
 
-app.post('/url', (req, res) => {
-  const bodyData = req.body;
-  console.log(bodyData);
-  res.send('Hello World url!');
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+})
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
 
-// Export the handler
-export const handler = serverless(app);
+module.exports = app;

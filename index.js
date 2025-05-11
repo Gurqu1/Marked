@@ -93,6 +93,17 @@ app.post('/url', (req, res) => {
   printDatabse();
 });
 
+app.get('/jobs', async (req,res) => {
+  const {data, error} = await supabase.from('Jobs').select('*');
+  if(error){
+    console.error("Error fetching data:", error);
+  }
+  else{
+    console.log("Data from database:", data);
+  }
+  res.json(data);
+});
+
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
